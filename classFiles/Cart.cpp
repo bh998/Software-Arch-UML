@@ -1,3 +1,5 @@
+//this file shows off classes since it is the file that controls the cart class
+
 #ifndef Cart_H
 #define Cart_H
 

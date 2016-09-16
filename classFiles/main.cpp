@@ -1,5 +1,3 @@
-//this file uses the classes and calls upon many objects in order to run the entire system
-
 #include "classFiles\classFiles.h"
 #include <iostream>
 #include <stdlib.h>
@@ -12,12 +10,10 @@ bool loggedIn; //defined from extern in defines.h
 char* username;
 Database db = Database();
 
-//a system function was used here to make sure the screen was clean and would keep the console from piling up with text, we do realize it isnt good practice to use system calls but for the triviality of this system we figured it to be acceptable
 void clearScreen() {
-	system("CLS"); //should probably be implemented in another way
+	system("CLS"); //should implement this in another way
 }
 
-//prints the main screen options
 void printOptions() {
 	cout << "Input option number:" << endl;
 	cout << "1. Look through inventory" << endl;
@@ -27,7 +23,6 @@ void printOptions() {
 	cout << "5. Quit" << endl;
 }
 
-//gets the choice from the user
 int getOptions() {
 	int choice = 0;
 	printOptions();
@@ -50,7 +45,6 @@ int getCartOptions() {
 	return choice;
 }
 
-//logs the user in and error checks to make sure that the username is accurate
 User login() {
 	username = new char[20];
 	User user;
@@ -70,7 +64,6 @@ User login() {
 	return user;
 }
 
-//adds an item to the users cart by grabbing the selected items id and then adding the selected quantity to the users cart
 User addItem(User user) {
 	Item item = Item();
 	int itemNum;
@@ -102,7 +95,6 @@ User addItem(User user) {
 	return updatedUser;
 }
 
-//gets the users address for an order
 User getAddress(User user) {
 	char newAddress[30];
 	cout << "Enter address: ";
@@ -113,7 +105,6 @@ User getAddress(User user) {
 	return user;
 }
 
-//gets the users credit card for an order
 User getCreditCard(User user) {
 	char choice = ' ';
 	char newCreditCard[20];
@@ -125,7 +116,6 @@ User getCreditCard(User user) {
 	return user;
 }
 
-//displays the inventory to the user based on their choice of categories
 User getInventory(User user) {
 	int choice = 0;
 	cout << "Choose category:" << endl;
@@ -157,7 +147,6 @@ User getInventory(User user) {
 	return user;
 }
 
-
 int main() {
 	bool quit = true;
 	bool skip = false; //used when the loop should stay in the current menu
@@ -167,7 +156,6 @@ int main() {
 
 	while (quit) {
 
-		//skip is used to keep the user looking at the current menu when an action is completed, if skip is not true then it will return the user to the main menu
 		if (skip == false) {
 			choice = getOptions();
 		}
@@ -175,14 +163,11 @@ int main() {
 			skip = false;
 		}
 
-		//choice for seeing the inventory
 		if (choice == 1) {
 			clearScreen();
 			user = getInventory(user);
 			continue;
 		}
-
-		//choice for seeing the users cart and modifying it
 		else if (choice == 2) {
 			clearScreen();
 			int cartChoice;
@@ -207,16 +192,12 @@ int main() {
 				//does nothing
 			}
 		}
-
-		//choice to see the users purchase history
 		else if (choice == 3) {
 			clearScreen();
 			cout << "Purchase history for " << user.getUsername() << ":" << endl << endl;
 			db.printPurchaseHistory(user);
 			continue;
 		}
-
-		//choice to log the user out of the system
 		else if (choice == 4) {
 			loggedIn = false;
 			db.emptyCart(user);
@@ -224,8 +205,6 @@ int main() {
 			user = login();
 			continue;
 		}
-
-		//choice that shuts down the system
 		else if (choice == 5) {
 			db.emptyCart(user);
 			quit = false;

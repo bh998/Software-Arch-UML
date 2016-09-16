@@ -1,3 +1,5 @@
+//this class shows inheritance in that it is the base class for all of the categories which inherit the attributes and functions of this class
+
 #include "Item.h"
 #include <string.h>
 

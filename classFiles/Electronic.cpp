@@ -1,5 +1,10 @@
+//this file is the cpp file that controls all the methods of the electronic class
+//this demostrates modularity in that it controls the electronic class completely and all of its attributes
+//it also shows inheritance since it inherits from items
+
 #include "Electronic.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 //constructors
@@ -25,6 +30,6 @@ void Electronic::printContents() {
 	cout << "Name: " << getName() << endl;
 	cout << "Type: " << getType() << endl;
 	cout << "Brand: " << getBrand() << endl;
-	cout << "Price: " << getPrice() << endl;
+	cout << fixed << setprecision(2) << "Price: " << getPrice() << endl;
 	cout << "Quantity: " << getQuantity() << endl << endl;
 }

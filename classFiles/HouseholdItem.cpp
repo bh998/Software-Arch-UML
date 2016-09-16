@@ -1,5 +1,10 @@
+//this file is the cpp file that controls all the methods of the household item class
+//this demostrates modularity in that it controls the household item class completely and all of its attributes
+//it also shows inheritance since it inherits from items
+
 #include "HouseholdItem.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 HouseholdItem::HouseholdItem() {
@@ -27,6 +32,6 @@ void HouseholdItem::printContents() {
 	cout << "Name: " << getName() << endl;
 	cout << "Type: " << getType() << endl;
 	cout << "Brand: " << getBrand() << endl;
-	cout << "Price: " << getPrice() << endl;
+	cout << fixed << setprecision(2) << "Price: " << getPrice() << endl;
 	cout << "Quantity: " << getQuantity() << endl << endl;
 }

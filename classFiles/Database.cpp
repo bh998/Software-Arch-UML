@@ -1,3 +1,5 @@
+//this file shows how modularity is used in object oriented programming since the entire database is controlled by this class file, the database cannot be accessed without using this class and its methods
+
 #include "classFiles.h"
 #include "../defines.h"
 #include <iostream>
@@ -9,6 +11,7 @@ sqlite3* Database::getDB() {
 	return db;
 }
 
+//opens the database
 void Database::open() {
 	int rc = sqlite3_open(DATABASE, &db);
 	if (rc) {
@@ -18,6 +21,7 @@ void Database::open() {
 	return;
 }
 
+//closes the database
 void Database::close() {
 	int rc = sqlite3_close(db);
 	if (rc) {
@@ -26,12 +30,16 @@ void Database::close() {
 	return;
 }
 
+
+//sets up a sqlite statement to retrieve the user based on the username and returns the user object that matches the username
 User Database::getUser(char* username) {
 	User user = User();
 	Cart cart = Cart();
 
 	open();
 
+	//this section of code is in all of the database methods
+	//it is how a sqlite query is build and executed
 	char* build1 = "Select * from User where username = '";
 	char* build2 = "';";
 	char* stmt = (char*)malloc(1 + strlen(build1) + strlen(build2) + strlen(username));
@@ -39,6 +47,7 @@ User Database::getUser(char* username) {
 	strcat(stmt, username);
 	strcat(stmt, build2);
 
+	//this section executes the sqlite statement without using a callback function and allows the code to individually access each row and column
 	sqlite3_stmt *selectStmt;
 	sqlite3_prepare(getDB(), stmt, strlen(stmt) + 1, &selectStmt, NULL);
 	int s;
@@ -64,6 +73,7 @@ User Database::getUser(char* username) {
 	return user;
 }
 
+//grabs the cart from the database based on the userId
 Cart Database::getCart(int userId) {
 	Cart cart = Cart();
 	Item items[20] = { Item() };
@@ -357,6 +367,7 @@ void Database::addPurchase(Purchase purchase, int userId) {
 	close();
 }
 
+//adds the items to the purchase_items table in the database which tracks all of the items that are associated with a specific purchase
 void Database::addPurchaseItems(Purchase purchase) {
 	open();
 	char* query = "select purchaseId from purchase order by purchaseId desc;";
@@ -473,7 +484,6 @@ void Database::printPurchaseHistory(User user) {
 				item[x] = getItem(sqlite3_column_int(selectStmt, 1));
 				prices[x] = item[x].getPrice();
 				quantities[x] = (int)sqlite3_column_int(selectStmt,2);
-				cout << quantities[x] << endl;
 			}
 			else if (s == SQLITE_DONE) {
 				break;
@@ -500,6 +510,7 @@ void Database::printPurchaseHistory(User user) {
 	}
 }
 
+//callback function for checking if the username is valid
 int Database::usernameCallback(void *userPtr, int argc, char **argv, char **azColName) {
 	if (argv[0]) {
 		loggedIn = true;
@@ -509,6 +520,7 @@ int Database::usernameCallback(void *userPtr, int argc, char **argv, char **azCo
 	return 0;
 }
 
+//gets the list of items in the inventory
 Item* Database::getInventory(int category) {
 	open();
 
@@ -547,6 +559,7 @@ Item* Database::getInventory(int category) {
 	return items;
 }
 
+//each of these functions searches through the entire inventory list to list only the items that apply to the category that is selected
 void Database::getHouseholdItems() {
 	Item items[20];
 	memcpy(items, getInventory(HOUSEHOLDITEMS), sizeof(items));

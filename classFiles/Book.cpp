@@ -1,5 +1,10 @@
+//this file is the cpp file that controls all the methods of the book class
+//this demostrates modularity in that it controls the book class completely and all of its attributes
+//it also shows inheritance since it inherits from items
+
 #include "Book.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 //constructors
@@ -42,6 +47,6 @@ void Book::printContents() {
 	cout << "Category: " << fict << endl;
 	cout << "Author: " << getAuthor() << endl; 
 	cout << "Publisher: " << getPublisher() << endl;
-	cout << "Price: " << getPrice() << endl;
+	cout << fixed << setprecision(2) << "Price: " << getPrice() << endl;
 	cout << "Quantity: " << getQuantity() << endl << endl;
 }

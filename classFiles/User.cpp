@@ -1,3 +1,6 @@
+//this class shows modularity since this one class controls everything related to the user except for accessing the database
+//it contains all the functions and attributes that are needed to work with a user object
+
 #include "User.h"
 #include <string.h>
 #include <iostream>

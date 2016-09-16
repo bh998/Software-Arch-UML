@@ -1,3 +1,5 @@
+//this files controls the entire purchase class and is another example of how classes and obejcts work
+
 #include "Purchase.h"
 #include <iostream>
 #include <iomanip>

@@ -3,7 +3,7 @@
 #ifndef DEFINES
 #define DEFINES
 
-#define DATABASE "inventory.db"
+#define DATABASE "Inventory.db"
 #define HOUSEHOLDITEMS 1
 #define BOOKS 2
 #define TOYS 3
